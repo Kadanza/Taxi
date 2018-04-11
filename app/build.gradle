@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'realm-android'
+
+
 
 android {
     compileSdkVersion 27
@@ -86,9 +87,27 @@ dependencies {
     androidTestImplementation  "com.google.dagger:dagger-android-support:$daggerVer"
 
 
+
+
+    /** App libs */
+
+    //google maps
+    implementation "com.google.android.gms:play-services-maps:$googleApiVersion"
+    implementation "com.google.android.gms:play-services-places:$googleApiVersion"
+    implementation "com.google.android.gms:play-services-location:$googleApiVersion"
+
+//    implementation('com.google.api-client:google-api-client-android:1.23.0') {
+//        exclude group: 'org.apache.httpcomponents'
+//    }
+
+
 }
 kotlin {
     experimental {
         coroutines "enable"
     }
+}
+
+kapt {
+    generateStubs = true
 }
