@@ -1,17 +1,15 @@
 package com.kadance.taxi.common.presenter
 
 import android.arch.lifecycle.ViewModel
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import com.kadance.taxi.common.live.PointsLD
-import com.kadance.taxi.common.live.UserCoordinatLD
+import com.kadance.taxi.common.live.UserLocationLD
 import javax.inject.Inject
 
 
 open  class MapPresenter @Inject constructor(
         val pointsLD : PointsLD,
-        val userCoordinatLD: UserCoordinatLD ) : ViewModel() {
+        val userLocationLD: UserLocationLD ) : ViewModel() {
 
 
     open fun clickFab(){

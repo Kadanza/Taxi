@@ -13,8 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.arranlomas.daggerviewmodelhelper.AppInjector
 import com.kadance.taxi.app.TaxiApp
-import com.kadance.taxi.app.di.DaggerAppComponent2
+import com.kadance.taxi.app.d
+import com.kadance.taxi.app.di.DaggerAppComponent
 import com.kadance.taxi.app.di.module.AppModule
+import com.kadance.taxi.app.e
 import com.kadance.taxi.common.view.MapActivity
 import com.kadance.taxi.common.view.activity.BaseActivity
 import org.hamcrest.Description
@@ -45,9 +47,9 @@ class MapActivityTest {
 
 //        AppInjector.init(app)
         val module  = FakeAppModule(mActivityRule.activity)
-        val appComponent = DaggerAppComponent2.builder().appModule(module).build()!!
+        val appComponent = DaggerAppComponent.builder().appModule(module).build()!!
         appComponent.inject(app)
-        app.appComponent = appComponent
+        TaxiApp.appComponent = appComponent
 
 
         val intent = Intent(mActivityRule.activity, MapActivity::class.java)
@@ -55,10 +57,22 @@ class MapActivityTest {
 
     }
 
+
+    @Test
+    fun openDatails() {
+
+    }
+
+
     @Test
     fun mapActivityTest() {
       //  val actionMenuItemView = onView(allOf(withId(R.id.action_detail), childAtPosition(childAtPosition(withId(R.id.toolbar), 1), 0), isDisplayed()))
        // actionMenuItemView.perform(click())
+
+        val x =mActivityRule.activity.d( "msg 1")
+        val x2 =mActivityRule.activity.e("msg 1")
+
+        d("qwertuy")
 
     }
 

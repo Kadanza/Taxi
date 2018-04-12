@@ -1,4 +1,4 @@
-package com.kadance.taxi.common.domain
+package com.kadance.taxi.common.repo
 
 import com.kadance.taxi.data.RPoint
 import io.realm.RealmResults

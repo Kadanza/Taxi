@@ -20,8 +20,8 @@ open class PointsLD  @Inject constructor()  :  LiveData< List<RPoint> >() {
         val point = RPoint()
         val point2 = RPoint()
 
-        point.lat = 1.0
-        point.lng = 1.0
+        point.lat = 34.0
+        point.lng = -86.0
         point.title = "Point1"
 
 

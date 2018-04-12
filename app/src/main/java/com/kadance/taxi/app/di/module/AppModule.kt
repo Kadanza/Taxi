@@ -3,19 +3,23 @@ package com.kadance.taxi.app.di.module
 import android.content.Context
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.kadance.taxi.kit.PermissionKit
 import com.kadance.taxi.common.live.PointsLD
-import com.kadance.taxi.common.live.UserCoordinatLD
+import com.kadance.taxi.common.live.UserLocationLD
+import com.kadance.taxi.kit.LogKit
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
 @Module
-open class AppModule(open val context: Context)  {
+open class AppModule(open val context: Context) {
 
 
     @Provides
-    fun provideContext(): Context { return context }
+    fun provideContext(): Context {
+        return context
+    }
 
     @Provides
     fun provideRealm(): Realm {
@@ -31,21 +35,33 @@ open class AppModule(open val context: Context)  {
 
 
     @Provides
-    open fun providePointsLD(): PointsLD { return PointsLD() }
+    open fun providePointsLD(): PointsLD {
+        return PointsLD()
+    }
 
     @Provides
-    fun provideUserCoordinatLD( flp : FusedLocationProviderClient ): UserCoordinatLD { return UserCoordinatLD(flp) }
+    open fun provideUserCoordinatLD(flp: FusedLocationProviderClient): UserLocationLD {
+        return UserLocationLD(flp)
+    }
 
 
     @Provides
-    fun provideFusedLocationProviderClient(): FusedLocationProviderClient { return   LocationServices.getFusedLocationProviderClient(context) }
+    fun provideFusedLocationProviderClient(): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(context)
+    }
 
 
 
 
+    @Provides
+    fun providePermissionsKit(): PermissionKit {
+        return PermissionKit()
+    }
 
-
-
+    @Provides
+    fun provideLogKit(): LogKit {
+        return LogKit()
+    }
 
 
 
