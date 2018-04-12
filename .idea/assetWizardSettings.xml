@@ -40,12 +40,25 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="5" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="outputName" value="ic_edit" />
+                                      <entry key="imageAsset" value="C:\Users\Dmitry\Desktop\607182-200.png" />
+                                      <entry key="outputName" value="ic_my_location" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -2,6 +2,15 @@
     <string name="app_name">Taxi</string>
     <string name="menu_details">Details</string>
     <string name="there_are_no_points">There are no points</string>
-    <string name="Loading">Loading</string>
+    <string name="loading">Loading</string>
     <string name="my_location">My Location</string>
+    <string name="name_of_place">Name of place</string>
+    <string name="create_new_point">Create new point</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="place_name">Place name</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
+    <string name="find">Find</string>
+    <string name="add_manually">Add manually</string>
 </resources>

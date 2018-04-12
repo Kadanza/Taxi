@@ -3,10 +3,13 @@ package com.kadance.taxi.app.di.module
 import android.content.Context
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.kadance.taxi.common.live.PointEventLD
 import com.kadance.taxi.kit.PermissionKit
 import com.kadance.taxi.common.live.PointsLD
 import com.kadance.taxi.common.live.UserLocationLD
+import com.kadance.taxi.common.repo.NetRepo
 import com.kadance.taxi.kit.LogKit
+import com.kadance.taxi.net.GoogleServicerApi
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
@@ -40,6 +43,12 @@ open class AppModule(open val context: Context) {
     }
 
     @Provides
+    open fun providePointEventLD(): PointEventLD {
+        return PointEventLD()
+    }
+
+
+    @Provides
     open fun provideUserCoordinatLD(flp: FusedLocationProviderClient): UserLocationLD {
         return UserLocationLD(flp)
     }
@@ -62,6 +71,20 @@ open class AppModule(open val context: Context) {
     fun provideLogKit(): LogKit {
         return LogKit()
     }
+
+    @Provides
+    fun provideGoogleServiceApi(): GoogleServicerApi {
+        return GoogleServicerApi.create()
+    }
+
+
+    @Provides
+    fun provideNetRepo(server: GoogleServicerApi): NetRepo {
+        return NetRepo(server)
+    }
+
+
+
 
 
 

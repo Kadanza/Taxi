@@ -13,8 +13,6 @@ open  class MapPresenter @Inject constructor(
 
 
     open fun clickFab(){
-        //Toast.makeText(context, "Fab clicked!", Toast.LENGTH_SHORT).show()
-        Log.d("qwe","click fab")
     }
 
 }
