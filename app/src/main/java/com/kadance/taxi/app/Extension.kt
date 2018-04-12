@@ -1,6 +1,6 @@
 package com.kadance.taxi.app
 
-import com.kadance.taxi.kit.MyLog
+import com.kadance.taxi.kit.LogWrapper
 
 /**
  * Created by Kenza on 12.04.2018.
@@ -9,19 +9,19 @@ import com.kadance.taxi.kit.MyLog
 
 
  fun Any.d(msg : String, e: Exception? = null) {
-    return MyLog.debug(msg, e )
+    return LogWrapper.debug(msg, e )
  }
 
 fun Any.e(msg : String, e: Exception? = null) {
-    return MyLog.error(msg, e )
+    return LogWrapper.error(msg, e )
 }
 
 fun Any.w(msg : String, e: Exception? = null) {
-    return MyLog.warring(msg, e )
+    return LogWrapper.warring(msg, e )
 }
 
 fun Any.i(msg : String, e: Exception? = null) {
-    return MyLog.info(msg, e )
+    return LogWrapper.info(msg, e )
 }
 
 

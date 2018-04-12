@@ -54,7 +54,7 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
     lateinit var presenter: MapPresenter
 
 
-
+    private var userPositionMarker: Marker? = null
     private var mGoogleMap: GoogleMap? = null
     private var latLngForCamera: LatLng? = null
     private var isCamaraMovedOnce = false
@@ -65,7 +65,6 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         i("create map activity")
 
         setContentView(R.layout.act_map)
@@ -84,7 +83,7 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
     }
 
 
-    private var userPositionMarker: Marker? = null
+
 
     fun prepareUserLocationLD(){
 

@@ -17,6 +17,7 @@ import com.kadance.taxi.app.d
 import com.kadance.taxi.app.di.DaggerAppComponent
 import com.kadance.taxi.app.di.module.AppModule
 import com.kadance.taxi.app.e
+import com.kadance.taxi.common.view.DetailActivity
 import com.kadance.taxi.common.view.MapActivity
 import com.kadance.taxi.common.view.activity.BaseActivity
 import org.hamcrest.Description

@@ -7,7 +7,7 @@ import com.kadance.taxi.app.TaxiApp
  * Created by Kenza on 12.04.2018.
  */
 
-object  MyLog {
+object  LogWrapper {
 
     val logKit = TaxiApp.appComponent?.getLogKit()
 
@@ -35,7 +35,7 @@ object  MyLog {
 
     internal val location: String
         get() {
-            val className = MyLog::class.java.name
+            val className = LogWrapper::class.java.name
             val traces = Thread.currentThread().stackTrace
             var found = false
 
