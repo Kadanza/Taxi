@@ -1,12 +1,13 @@
 package com.kadance.taxi
 
 import com.kadance.taxi.common.live.PointsLD
+import com.kadance.taxi.common.repo.IDataRepo
 import com.kadance.taxi.data.RPoint
 
 /**
  * Created by Kenza on 11.04.2018.
  */
-class FakePointsLD : PointsLD() {
+class FakePointsLD (repo : IDataRepo): PointsLD(repo ) {
 
     init {
         val list = ArrayList<RPoint>()

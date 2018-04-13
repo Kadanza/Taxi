@@ -6,18 +6,19 @@ import com.google.android.gms.location.LocationServices
 import com.kadance.taxi.app.di.module.AppModule
 import com.kadance.taxi.common.live.PointsLD
 import com.kadance.taxi.common.live.UserLocationLD
+import com.kadance.taxi.common.repo.IDataRepo
 import dagger.Provides
 
 /**
  * Created by Kenza on 11.04.2018.
  */
-class  FakeAppModule(override val context: Context) : AppModule(context){
+open class  FakeAppModule(override val context: Context) : AppModule(context){
 
-    override fun providePointsLD(): PointsLD { return FakePointsLD() }
+//    override fun pointsLD(repo: IDataRepo): PointsLD { return FakePointsLD(repo) }
 
 
 
-    override fun provideUserCoordinatLD(flp: FusedLocationProviderClient): UserLocationLD {
+    override fun userCoordinatLD(flp: FusedLocationProviderClient): UserLocationLD {
         return FakeUserLocationLD(flp)
     }
 

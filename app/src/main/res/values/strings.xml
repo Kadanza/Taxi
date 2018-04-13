@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Taxi</string>
-    <string name="menu_details">Details</string>
-    <string name="there_are_no_points">There are no points</string>
+
+    <!--Map Activity-->
     <string name="loading">Loading</string>
     <string name="my_location">My Location</string>
+
+    <!--Create point dialog-->
     <string name="name_of_place">Name of place</string>
     <string name="create_new_point">Create new point</string>
     <string name="latitude">Latitude</string>
@@ -13,4 +15,13 @@
     <string name="create">Create</string>
     <string name="find">Find</string>
     <string name="add_manually">Add manually</string>
+
+    <!--Detail Activity-->
+    <string name="there_are_no_points">There are no points</string>
+    <string name="menu_details">Details</string>
+    <string name="error_during_loading_point">There are error occured during loading point location</string>
+    <string name="connection_timeout">Connection is timeout</string>
+    <string name="no_res_for_point_location">No result for point location</string>
+    <string name="point_created">Point created</string>
+
 </resources>

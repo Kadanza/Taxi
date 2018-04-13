@@ -9,7 +9,7 @@ import io.realm.RealmResults
 interface IDataRepo {
 
     fun getAllPoints(): RealmResults<RPoint>
-    fun createPoint()
     fun editPoint()
 
+    fun createPoint(name: String, lat: Double, lng: Double): RPoint
 }

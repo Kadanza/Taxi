@@ -25,8 +25,6 @@ interface AppComponent : AndroidInjector<DaggerApplication> {
 
     fun getMainPresenter(): MapPresenter
     fun getDetailPresenter(): DetailPresenter
-
-
     fun getLogKit(): LogKit
 
 

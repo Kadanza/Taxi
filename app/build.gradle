@@ -51,7 +51,7 @@ dependencies {
     // Paging
     implementation "android.arch.paging:runtime:1.0.0-beta1"
     // Test helpers for LiveData
-    testImplementation "android.arch.core:core-testing:1.1.1"
+    androidTestImplementation "android.arch.core:core-testing:1.1.1"
 
     //kotlin support
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -80,13 +80,16 @@ dependencies {
     implementation "com.google.dagger:dagger:$daggerVer"
     implementation "com.google.dagger:dagger-android-support:$daggerVer"
     implementation 'com.github.arranlomas.daggerviewmodelhelper:daggerviewmodelhelper:0.1.0'
+    androidTestImplementation 'com.github.fabioCollini:DaggerMock:0.8.4'
+
 
     kapt "com.google.dagger:dagger-android-processor:$daggerVer"
     kapt "com.google.dagger:dagger-compiler:$daggerVer"
     androidTestImplementation "com.google.dagger:dagger-android-support:$daggerVer"
     androidTestImplementation  "com.google.dagger:dagger-android-support:$daggerVer"
 
-
+    //eventbus
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
 
     /** App libs */

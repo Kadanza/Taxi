@@ -1,20 +1,35 @@
 package com.kadance.taxi
 
+import android.arch.lifecycle.ViewModelProvider
 import android.content.Intent
+import android.support.test.InstrumentationRegistry
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.kadance.taxi.app.TaxiApp
+import com.kadance.taxi.app.di.AppComponent
 import com.kadance.taxi.app.di.DaggerAppComponent
+import com.kadance.taxi.app.di.module.AppModule
 import com.kadance.taxi.common.view.DetailActivity
 import com.kadance.taxi.common.view.activity.BaseActivity
 import com.kadance.taxi.net.GoogleServicerApi
+import it.cosenonjaviste.daggermock.DaggerMock
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.net.URLEncoder
+import android.app.Activity
+import com.kadance.taxi.common.presenter.DetailPresenter
+import com.kadance.taxi.common.repo.NetRepo
+import dagger.android.AndroidInjector
+import org.mockito.Mockito.mock
+import android.arch.core.executor.testing.InstantTaskExecutorRule
+import org.junit.rules.TestRule
+
+
+
 
 /**
  * Created by Kenza on 12.04.2018.
@@ -26,12 +41,18 @@ class DetailActivityTest {
 
     @Rule
     @JvmField
-    var mActivityRule = ActivityTestRule(BaseActivity::class.java)
+    var mActivityRule = ActivityTestRule(DetailActivity::class.java , false )
 
     @Rule
     @JvmField
-    var mActivityRule2 = ActivityTestRule(DetailActivity::class.java)
+    var rule: TestRule = InstantTaskExecutorRule()
 
+//    @Rule
+//    @JvmField
+//    var mActivityRule2 = ActivityTestRule(DetailActivity::class.java, false, true )
+
+
+    private var act3: DetailActivity? = null
 
     @Before
     fun before() {
@@ -42,30 +63,30 @@ class DetailActivityTest {
         TaxiApp.appComponent = appComponent
 
 
-        val intent = Intent(mActivityRule.activity, DetailActivity::class.java)
-//        mActivityRule.launchActivity(intent)
 
-        mActivityRule.launchActivity(intent)
+//        val intent = Intent(mActivityRule.activity, DetailActivity::class.java)
+        act3 = mActivityRule.launchActivity( Intent())
+
+        //mActivityRule.launchActivity(intent)
+
+
 
     }
+
+
 
 
     @Test
     fun openDatails() {
 
-
-        val x2 = mActivityRule2.activity
-
-
-        val server = GoogleServicerApi.create()
-        val addr = URLEncoder.encode("Rostov on don", "UTF-8")
+       // val y2  =   InstrumentationRegistry.getContext() as DetailActivity
 
 
 
-//        y?.createPointByAddress(addr)
-        x2.presenter.createPointByAddress("qwe")
+        mActivityRule.activity.presenter.createPointByAddress("Rostov on don")
 
-        print(x2.toString())
+
+
 
 
         //onView(ViewMatchers.withId(R.id.fab)).perform(click())

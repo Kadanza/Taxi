@@ -10,7 +10,7 @@ import javax.inject.Inject
  */
 class NetRepo @Inject constructor(val server :GoogleServicerApi) {
 
-    fun requestLocationByAdress(addr : String): Observable<LocationResult> {
+    fun requestLocationByAddress(addr : String): Observable<LocationResult> {
         return server.getLocationByAddress(addr)
     }
 
