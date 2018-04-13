@@ -7,6 +7,8 @@ import com.kadance.taxi.app.di.module.AppModule
 import com.kadance.taxi.common.live.PointsLD
 import com.kadance.taxi.common.live.UserLocationLD
 import com.kadance.taxi.common.repo.IDataRepo
+import com.kadance.taxi.common.repo.NetRepo
+import com.kadance.taxi.net.GoogleServicerApi
 import dagger.Provides
 
 /**
@@ -20,6 +22,10 @@ open class  FakeAppModule(override val context: Context) : AppModule(context){
 
     override fun userCoordinatLD(flp: FusedLocationProviderClient): UserLocationLD {
         return FakeUserLocationLD(flp)
+    }
+
+    override fun netRepo( server : GoogleServicerApi): NetRepo {
+        return FakeNetRepo(server)
     }
 
 }

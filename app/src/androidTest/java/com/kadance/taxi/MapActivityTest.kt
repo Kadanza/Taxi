@@ -36,7 +36,7 @@ class MapActivityTest {
 
     @Rule
     @JvmField
-    var mActivityRule = ActivityTestRule(BaseActivity::class.java)
+    var mActivityRule = ActivityTestRule(MapActivity::class.java)
 
 
 
@@ -53,8 +53,8 @@ class MapActivityTest {
         TaxiApp.appComponent = appComponent
 
 
-        val intent = Intent(mActivityRule.activity, MapActivity::class.java)
-        mActivityRule.launchActivity(intent)
+        mActivityRule.finishActivity()
+        mActivityRule.launchActivity(Intent())
 
     }
 

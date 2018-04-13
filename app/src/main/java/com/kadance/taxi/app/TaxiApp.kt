@@ -13,12 +13,19 @@ class TaxiApp : DaggerApplication(){
 
     companion object  {
         var appComponent: AppComponent? = null
+        var testible = false
+    }
+
+
+    fun setComponent(component: AppComponent){
+        //AppInjector.init(this)
+        TaxiApp.appComponent = component
+        appComponent?.inject(this)
 
     }
 
     public override fun applicationInjector(): AndroidInjector<DaggerApplication> {
 
-        AppInjector.init(this)
         val module  = AppModule(this)
         appComponent = DaggerAppComponent.builder().appModule(module).build()!!
         appComponent?.inject(this)
@@ -28,6 +35,7 @@ class TaxiApp : DaggerApplication(){
 
 
     override  fun onCreate() {
+        AppInjector.init(this)
         super.onCreate()
     }
 }

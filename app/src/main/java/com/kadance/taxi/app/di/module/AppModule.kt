@@ -42,24 +42,25 @@ open class AppModule(open val context: Context) {
         return Realm.getInstance(mConfig)
     }
 
-
+    @Singleton
     @Provides
     open fun  pointsLD(repo: IDataRepo): PointsLD {
         return PointsLD(repo)
     }
 
+    @Singleton
     @Provides
     open fun isLoadingLD(): DetailActivity.IsLoadingLD {
         return  DetailActivity.IsLoadingLD()
     }
 
-
+    @Singleton
     @Provides
     open fun userCoordinatLD(flp: FusedLocationProviderClient): UserLocationLD {
         return UserLocationLD(flp)
     }
 
-
+    @Singleton
     @Provides
     fun fusedLocationProviderClient(): FusedLocationProviderClient {
         return LocationServices.getFusedLocationProviderClient(context)
@@ -67,12 +68,13 @@ open class AppModule(open val context: Context) {
 
 
 
-
+    @Singleton
     @Provides
     fun permissionsKit(): PermissionKit {
         return PermissionKit()
     }
 
+    @Singleton
     @Provides
     fun logKit(): LogKit {
         return LogKit()
@@ -83,22 +85,24 @@ open class AppModule(open val context: Context) {
         return GoogleServicerApi.create()
     }
 
-
     @Provides
-    fun netRepo(server: GoogleServicerApi): NetRepo {
+    open fun netRepo(server: GoogleServicerApi): NetRepo {
         return NetRepo(server)
     }
 
+    @Singleton
     @Provides
     fun dataRepo( realm: Realm , pointDao : PointDAO): IDataRepo {
         return RealmRepo(realm, pointDao)
     }
 
-
+    @Singleton
     @Provides
     fun poinDao(realm: Realm): PointDAO {
         return PointDAO(realm)
     }
+
+
 
 
 

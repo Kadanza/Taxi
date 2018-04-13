@@ -2,8 +2,10 @@ package com.kadance.taxi.common.presenter
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModel
+import com.kadance.taxi.app.TaxiApp
 import com.kadance.taxi.app.d
 import com.kadance.taxi.app.e
+import com.kadance.taxi.common.live.PointsLD
 import com.kadance.taxi.common.repo.NetRepo
 import com.kadance.taxi.common.repo.RealmRepo
 import com.kadance.taxi.common.view.DetailActivity
@@ -21,28 +23,31 @@ import org.greenrobot.eventbus.EventBus
 
 
 open  class DetailPresenter @Inject constructor(
-        val isLoadingLD: DetailActivity.IsLoadingLD?,
+        val isLoadingLD: DetailActivity.IsLoadingLD,
+        val pointsLD: PointsLD,
         val netRepo: NetRepo,
         val dataRepo: RealmRepo
         ) : ViewModel() {
 
 
+
+
     @SuppressLint("CheckResult")
     open fun createPointByAddress(address : String){
 
-        isLoadingLD?.setLoading(true)
+        isLoadingLD.setLoading(true)
 
         netRepo.requestLocationByAddress(address)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io()).subscribe({
-                    d(it.toString())
+                  //  d(it.toString())
 
                     val lat = it.results?.first()?.geometry?.location?.lat  ?: 0.0
                     val lng = it.results?.first()?.geometry?.location?.lng  ?: 0.0
                     val name =  address
 
                     savePoint(name, lat, lng)
-                    isLoadingLD?.setLoading(false)
+                    isLoadingLD.setLoading(false)
 
                 },{
 
@@ -52,7 +57,7 @@ open  class DetailPresenter @Inject constructor(
                         EventBus.getDefault().post(DetailActivity.PointLoadingEvent.Error)
                     }
                     e("Error when loading lat lng  by address", Exception(it))
-                    isLoadingLD?.setLoading(false)
+                    isLoadingLD.setLoading(false)
                 })
     }
 
@@ -61,13 +66,14 @@ open  class DetailPresenter @Inject constructor(
 
     fun savePoint(name: String, lat: Double, lng: Double) {
         dataRepo.createPoint(name, lat,lng)
+
         EventBus.getDefault().post(DetailActivity.PointLoadingEvent.Create)
     }
 
 
 
     open fun createPointByLatLng(){
-
+//        pointsLD()
     }
 
 }

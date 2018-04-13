@@ -10,6 +10,7 @@ interface IDataRepo {
 
     fun getAllPoints(): RealmResults<RPoint>
     fun editPoint()
+    fun removePoint(point : RPoint)
 
     fun createPoint(name: String, lat: Double, lng: Double): RPoint
 }

@@ -1,6 +1,7 @@
 package com.kadance.taxi.common.live
 
 import android.arch.lifecycle.LiveData
+import com.kadance.taxi.app.d
 import com.kadance.taxi.common.repo.IDataRepo
 import com.kadance.taxi.data.PointDAO
 import com.kadance.taxi.data.RPoint
@@ -16,33 +17,13 @@ open class PointsLD  @Inject constructor(var  dataRepo : IDataRepo)  :  LiveData
 
 
     init {
+        d("create new pointLD ")
 
         dataRepo.getAllPoints().addChangeListener { t, changeSet ->
-            value = t
+            postValue( t)
         }
 
-
-
-//        val list = ArrayList<RPoint>()
-//
-//
-//        val point = RPoint()
-//        val point2 = RPoint()
-//
-//        point.lat = 34.0
-//        point.lng = -86.0
-//        point.title = "Point1"
-//
-//
-//        point2.lat = 2.0
-//        point2.lng = 2.0
-//        point2.title = "Point2"
-//
-//        list.add(point)
-//        list.add(point2)
-//
-//
-//        value = list
+        value = dataRepo.getAllPoints()
     }
 
 

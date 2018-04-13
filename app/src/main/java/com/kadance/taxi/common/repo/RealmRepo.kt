@@ -25,8 +25,15 @@ open class RealmRepo @Inject constructor(val realm: Realm, val pointDao: PointDA
 
     }
 
-    override fun editPoint() {
+    override fun removePoint(point: RPoint) {
     }
+
+
+    override fun editPoint() {
+
+    }
+
+
 
 
 }

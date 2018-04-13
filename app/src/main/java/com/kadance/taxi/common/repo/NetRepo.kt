@@ -8,9 +8,9 @@ import javax.inject.Inject
 /**
  * Created by Kenza on 12.04.2018.
  */
-class NetRepo @Inject constructor(val server :GoogleServicerApi) {
+open class NetRepo @Inject constructor(val server :GoogleServicerApi) {
 
-    fun requestLocationByAddress(addr : String): Observable<LocationResult> {
+    open fun requestLocationByAddress(addr : String): Observable<LocationResult> {
         return server.getLocationByAddress(addr)
     }
 

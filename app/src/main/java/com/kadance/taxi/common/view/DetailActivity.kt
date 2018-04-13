@@ -56,7 +56,7 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
         init { value = false }
 
         fun setLoading(value: Boolean?) {
-            super.setValue(value)
+            super.setValue(value!!)
         }
     }
 
@@ -89,6 +89,7 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+       // updateContentState()
 
 
         pointsLD.observe(this, Observer {
@@ -97,10 +98,17 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
                 pointsData = it
                 recycler.adapter.notifyDataSetChanged()
 
-                checkContent()
-                updateContentState()
+                if(contentState == Loading) return@Observer
+
+                if(pointsData.isEmpty()){
+                    contentState = Content
+                }else{
+                    contentState = Empty
+                }
+                updateContentState(contentState)
             }
         })
+
 
         isLoadingLD.observe(this, Observer {
 
@@ -109,10 +117,10 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
            }else{
                contentState = NoLoading
            }
-            updateContentState()
+            updateContentState(contentState)
         })
 
-
+        //isLoadingLD.setLoading(true)
 
         RxView.clicks(fab).subscribe({
             openCreatePointDialog()
@@ -128,15 +136,11 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
 
 
 
-    fun checkContent(){
-        if(contentState != Loading){
-            if(pointsData.isNotEmpty()) contentState = Content else contentState = Empty
-        }
-    }
 
 
 
-    fun updateContentState(){
+    @Synchronized fun updateContentState( contentState : ContentState){
+
 
         content.visibility = View.GONE
         empty.visibility = View.GONE
@@ -144,14 +148,23 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
 
         when(contentState){
 
-            Loading ->   loading.visibility = View.VISIBLE
-            Content ->   content.visibility = View.VISIBLE
-            Empty   ->   empty.visibility = View.VISIBLE
+            Loading ->  {
+                loading.visibility = View.VISIBLE
+            }
+            Content ->   {
+                content.visibility = View.VISIBLE
+            }
+            Empty   ->   {
+                empty.visibility = View.VISIBLE
+            }
             NoLoading -> {
-                checkContent()
-                updateContentState()
+                if(pointsData.isNotEmpty())
+                    content.visibility = View.VISIBLE
+                else
+                    empty.visibility = View.VISIBLE
             }
         }
+        d("")
     }
 
 
@@ -192,12 +205,12 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
 
 
 
-    override fun onPointDialogFind() {
-
+    override fun onPointDialogFind(address : String) {
+        presenter.createPointByAddress(address)
     }
 
-    override fun onPointDialogCreate() {
-
+    override fun onPointDialogCreate(address : String, lat: Double, lng :Double) {
+        presenter.savePoint(address, lat, lng)
     }
 
     override fun onPointDialogCancel() {}

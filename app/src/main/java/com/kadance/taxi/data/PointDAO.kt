@@ -21,7 +21,7 @@ open class PointDAO @Inject constructor( var realm : Realm)  {
      *
      */
     fun findAll(): RealmResults<RPoint> {
-        return realm.where(RPoint::class.java).findAllAsync()
+        return realm.where(RPoint::class.java).findAll()
     }
 
     fun fingByLocation( lat :Double, lng :Double): RPoint? {
@@ -48,6 +48,7 @@ open class PointDAO @Inject constructor( var realm : Realm)  {
             newp.title = name
             newp.lat = lat
             newp.lng = lng
+
             return newp
         }
     }

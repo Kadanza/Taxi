@@ -43,13 +43,17 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
      *
      */
 
-    val  MAP_ZOOM = 6.0f
+    val MAP_ZOOM = 6.0f
 
 
-    @Inject lateinit var modelFactory: ViewModelProvider.Factory
-    @Inject lateinit var pointsLD: PointsLD
-    @Inject lateinit var userLocationLD: UserLocationLD
-    @Inject lateinit var permissionKit : PermissionKit
+    @Inject
+    lateinit var modelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var pointsLD: PointsLD
+    @Inject
+    lateinit var userLocationLD: UserLocationLD
+    @Inject
+    lateinit var permissionKit: PermissionKit
 
     lateinit var presenter: MapPresenter
 
@@ -58,9 +62,6 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
     private var mGoogleMap: GoogleMap? = null
     private var latLngForCamera: LatLng? = null
     private var isCamaraMovedOnce = false
-
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,23 +77,22 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
     }
 
 
-    fun openDetail(){
+    fun openDetail() {
         i("open detail activity")
         val intent = Intent(this, DetailActivity::class.java)
         startActivity(intent)
     }
 
 
+    fun prepareUserLocationLD() {
 
+        userLocationLD.observe(this, Observer { point ->
 
-    fun prepareUserLocationLD(){
-
-        userLocationLD.observe(this, Observer{ point->
-
-            if(point == null){
+            if (point == null) {
                 moveCamaraOnce()
             }
-            point.let {it!!
+            point.let {
+                it!!
 
                 d("create point of user's location lat = ${it.latitude} lng = ${it.longitude} ")
 
@@ -102,17 +102,11 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
                 val icon = BitmapDescriptorFactory.fromResource(R.mipmap.ic_my_location)
 
 
-                if( userPositionMarker == null){
-                    val mark  = MarkerOptions().icon(icon).position(latLng).title(title)
+                if (userPositionMarker == null) {
+                    val mark = MarkerOptions().icon(icon).position(latLng).title(title)
                     userPositionMarker = mGoogleMap?.addMarker(mark)
                 }
-                userPositionMarker?.let {
-                    // execute this block if not null
-                    d("qwe2")
-                } ?: run {
-                    // execute this block if null
-                    d("qwe")
-                }
+
 
 
                 userPositionMarker?.position = latLng
@@ -125,10 +119,10 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
     }
 
 
-    private fun moveCamaraOnce(){
+    private fun moveCamaraOnce() {
 
         latLngForCamera.let {
-            if(!isCamaraMovedOnce){
+            if (!isCamaraMovedOnce) {
 
                 d("move camera")
                 mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(it, MAP_ZOOM))
@@ -138,32 +132,29 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
     }
 
 
-
-
-
     @SuppressLint("CheckResult")
     override fun onMapReady(map: GoogleMap?) {
 
-           mGoogleMap = map
+        mGoogleMap = map
 
         i("map ready")
 
         permissionKit.setActivity(this)
         permissionKit.checkLocationPermission()?.subscribe({
 
-            if(it){
+            if (it) {
                 i("location permission is granted")
                 prepareUserLocationLD()
-            }else{
+            } else {
                 i("location permission is denied ")
             }
         })
 
-        pointsLD.observe(this, Observer{
+        pointsLD.observe(this, Observer {
 
             d("get ${it?.size} points")
 
-            for(point in it!!){
+            for (point in it!!) {
 
                 val latLng = LatLng(point.lat, point.lng)
                 val title = point.title

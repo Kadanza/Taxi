@@ -24,10 +24,9 @@ class CreatePointDialog(context: Context, val delegate : CreatePointDelegate) : 
 
     interface  CreatePointDelegate{
 
-        fun onPointDialogFind()
-        fun onPointDialogCreate()
         fun onPointDialogCancel()
-
+        fun onPointDialogFind(address: String)
+        fun onPointDialogCreate(address: String, lat: Double, lng: Double)
     }
 
     enum class Status{
@@ -40,7 +39,6 @@ class CreatePointDialog(context: Context, val delegate : CreatePointDelegate) : 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.dlg_add_point)
 
         manuallyCB.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -50,12 +48,20 @@ class CreatePointDialog(context: Context, val delegate : CreatePointDelegate) : 
 
 
         RxView.clicks(findBV).subscribe({
-            delegate.onPointDialogFind()
+
+            val address = nameED.text.toString()
+
+            delegate.onPointDialogFind(address)
             dismiss()
         })
 
         RxView.clicks(createBV).subscribe({
-            delegate.onPointDialogCreate()
+
+            val address = nameED.text.toString()
+            val lat = latED.text.toString().toDouble()
+            val lng = lngED.text.toString().toDouble()
+
+            delegate.onPointDialogCreate(address, lat, lng)
             dismiss()
         })
 

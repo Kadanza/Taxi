@@ -39,37 +39,30 @@ import org.junit.rules.TestRule
 @RunWith(AndroidJUnit4::class)
 class DetailActivityTest {
 
+
     @Rule
     @JvmField
-    var mActivityRule = ActivityTestRule(DetailActivity::class.java , false )
+    var mActivityRule = object : ActivityTestRule<DetailActivity>(DetailActivity::class.java) {
+        override fun beforeActivityLaunched() {
+
+            val app = (InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as TaxiApp)
+            val module = FakeAppModule(app)
+            val appComponent = DaggerAppComponent.builder().appModule(module).build()!!
+            app.setComponent(appComponent)
+
+            super.beforeActivityLaunched()
+        }
+    }
+
 
     @Rule
     @JvmField
     var rule: TestRule = InstantTaskExecutorRule()
 
-//    @Rule
-//    @JvmField
-//    var mActivityRule2 = ActivityTestRule(DetailActivity::class.java, false, true )
 
-
-    private var act3: DetailActivity? = null
 
     @Before
     fun before() {
-        val app = (mActivityRule.activity.application as TaxiApp)
-        val module = FakeAppModule(mActivityRule.activity)
-        val appComponent = DaggerAppComponent.builder().appModule(module).build()!!
-        appComponent.inject(app)
-        TaxiApp.appComponent = appComponent
-
-
-
-//        val intent = Intent(mActivityRule.activity, DetailActivity::class.java)
-        act3 = mActivityRule.launchActivity( Intent())
-
-        //mActivityRule.launchActivity(intent)
-
-
 
     }
 
@@ -79,14 +72,7 @@ class DetailActivityTest {
     @Test
     fun openDatails() {
 
-       // val y2  =   InstrumentationRegistry.getContext() as DetailActivity
-
-
-
-        mActivityRule.activity.presenter.createPointByAddress("Rostov on don")
-
-
-
+        //mActivityRule.activity.presenter.createPointByAddress("Rostov on don")
 
 
         //onView(ViewMatchers.withId(R.id.fab)).perform(click())
