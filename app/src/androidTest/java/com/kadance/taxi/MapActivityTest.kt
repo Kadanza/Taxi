@@ -44,17 +44,6 @@ class MapActivityTest {
 
     @Before
     fun before() {
-        val app =  (mActivityRule.activity.application as TaxiApp)
-
-//        AppInjector.init(app)
-        val module  = FakeAppModule(mActivityRule.activity)
-        val appComponent = DaggerAppComponent.builder().appModule(module).build()!!
-        appComponent.inject(app)
-        TaxiApp.appComponent = appComponent
-
-
-        mActivityRule.finishActivity()
-        mActivityRule.launchActivity(Intent())
 
     }
 
@@ -67,13 +56,7 @@ class MapActivityTest {
 
     @Test
     fun mapActivityTest() {
-      //  val actionMenuItemView = onView(allOf(withId(R.id.action_detail), childAtPosition(childAtPosition(withId(R.id.toolbar), 1), 0), isDisplayed()))
-       // actionMenuItemView.perform(click())
 
-        val x =mActivityRule.activity.d( "msg 1")
-        val x2 =mActivityRule.activity.e("msg 1")
-
-        d("qwertuy")
 
     }
 
@@ -81,7 +64,6 @@ class MapActivityTest {
     @After
     fun after() {
 
-        Thread.sleep(4000000)
 
     }
 

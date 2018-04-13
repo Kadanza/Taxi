@@ -13,6 +13,14 @@ import javax.inject.Inject
 open class RealmRepo @Inject constructor(val realm: Realm, val pointDao: PointDAO) : IDataRepo {
 
 
+    override fun editPoint(point: RPoint, name: String, lat: Double, lng: Double): RPoint {
+        realm.beginTransaction()
+        val point = pointDao.update(point, name, lat, lng)
+        realm.commitTransaction()
+        return point
+    }
+
+
     override fun getAllPoints(): RealmResults<RPoint> {
         return pointDao.findAll()
     }
@@ -26,12 +34,13 @@ open class RealmRepo @Inject constructor(val realm: Realm, val pointDao: PointDA
     }
 
     override fun removePoint(point: RPoint) {
+        realm.beginTransaction()
+        pointDao.remove(point)
+        realm.commitTransaction()
     }
 
 
-    override fun editPoint() {
 
-    }
 
 
 

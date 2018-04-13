@@ -42,7 +42,7 @@ class RPointsAdapter( val delegate : RPointDelegate) : RecyclerView.Adapter<RPoi
 
         @SuppressLint("CheckResult")
         fun bind(point : RPoint) {
-            val title =  "${point.title}"
+            val title = point.title
             val latLng = "lat: ${point.lat}  lng: ${point.lng}"
 
             RxView.clicks(itemView.edit).subscribe({
@@ -56,7 +56,9 @@ class RPointsAdapter( val delegate : RPointDelegate) : RecyclerView.Adapter<RPoi
             itemView.titleTV.text = title
 
             if(title.isEmpty()){
-                itemView.visibility = View.GONE
+                itemView.titleTV.visibility = View.GONE
+            }else{
+                itemView.titleTV.visibility = View.VISIBLE
             }
             itemView.latLngTV.text = latLng
         }

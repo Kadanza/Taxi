@@ -32,6 +32,22 @@ open class PointDAO @Inject constructor( var realm : Realm)  {
     }
 
 
+    fun remove(rPoint: RPoint){
+        rPoint.deleteFromRealm()
+    }
+
+
+    fun update(rPoint: RPoint, name: String, lat :Double, lng :Double ): RPoint {
+        rPoint.title = name
+        rPoint.lat = lat
+        rPoint.lng = lng
+
+        return rPoint
+    }
+
+
+
+
     /**
      * если есть точка с координатами, возвратить ее, иначе создать новую
      */
@@ -40,7 +56,7 @@ open class PointDAO @Inject constructor( var realm : Realm)  {
         val point = fingByLocation(lat, lng)
 
         if(point != null){
-
+            point.title = name
             return point
 
         }else{

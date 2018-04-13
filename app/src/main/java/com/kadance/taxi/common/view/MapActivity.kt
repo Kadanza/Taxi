@@ -132,6 +132,9 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
     }
 
 
+
+    val markerPoints =  ArrayList<Marker>()
+
     @SuppressLint("CheckResult")
     override fun onMapReady(map: GoogleMap?) {
 
@@ -154,11 +157,19 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
 
             d("get ${it?.size} points")
 
+            for( m in markerPoints){
+                m.remove()
+            }
+
             for (point in it!!) {
 
                 val latLng = LatLng(point.lat, point.lng)
                 val title = point.title
-                map?.addMarker(MarkerOptions().position(latLng).title(title))
+                val marker = map?.addMarker(MarkerOptions().position(latLng).title(title))
+
+                marker?.let {
+                    markerPoints.add(it)
+                }
 
                 latLngForCamera = latLng
 

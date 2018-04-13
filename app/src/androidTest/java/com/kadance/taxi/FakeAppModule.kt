@@ -24,8 +24,8 @@ open class  FakeAppModule(override val context: Context) : AppModule(context){
         return FakeUserLocationLD(flp)
     }
 
-    override fun netRepo( server : GoogleServicerApi): NetRepo {
-        return FakeNetRepo(server)
-    }
+//    override fun netRepo( server : GoogleServicerApi): NetRepo {
+//        return FakeNetRepo(server)
+//    }
 
 }

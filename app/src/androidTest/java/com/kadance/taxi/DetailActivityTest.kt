@@ -26,6 +26,8 @@ import com.kadance.taxi.common.repo.NetRepo
 import dagger.android.AndroidInjector
 import org.mockito.Mockito.mock
 import android.arch.core.executor.testing.InstantTaskExecutorRule
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
 import org.junit.rules.TestRule
 
 
@@ -72,7 +74,12 @@ class DetailActivityTest {
     @Test
     fun openDatails() {
 
-        //mActivityRule.activity.presenter.createPointByAddress("Rostov on don")
+//        async {
+//            delay(3000)
+            mActivityRule.activity.presenter.createPointByAddress("Moskva")
+
+//        }
+
 
 
         //onView(ViewMatchers.withId(R.id.fab)).perform(click())

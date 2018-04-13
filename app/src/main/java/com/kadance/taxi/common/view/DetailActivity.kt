@@ -9,12 +9,9 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.View
-import android.widget.Toast
-import com.google.android.gms.maps.SupportMapFragment
 import com.jakewharton.rxbinding2.view.RxView
 import com.kadance.taxi.R
 import com.kadance.taxi.app.d
-import com.kadance.taxi.app.e
 import com.kadance.taxi.app.showToast
 import com.kadance.taxi.common.live.PointsLD
 import com.kadance.taxi.common.presenter.DetailPresenter
@@ -22,12 +19,10 @@ import com.kadance.taxi.common.view.DetailActivity.ContentState.*
 import com.kadance.taxi.common.view.activity.BaseActivity
 import com.kadance.taxi.common.view.adapter.RPointsAdapter
 import com.kadance.taxi.data.RPoint
-import com.kadance.taxi.net.GoogleServicerApi
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.act_detail.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
 import org.greenrobot.eventbus.EventBus
-import java.net.URLEncoder
 import javax.inject.Inject
 import org.greenrobot.eventbus.ThreadMode
 import org.greenrobot.eventbus.Subscribe
@@ -37,7 +32,7 @@ import org.greenrobot.eventbus.Subscribe
 /**
  * Created by Kenza on 11.04.2018.
  */
-class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePointDialog.CreatePointDelegate {
+class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, PointDialog.CreatePointDelegate {
 
 
 
@@ -56,7 +51,7 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
         init { value = false }
 
         fun setLoading(value: Boolean?) {
-            super.setValue(value!!)
+            super.postValue(value!!)
         }
     }
 
@@ -100,7 +95,7 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
 
                 if(contentState == Loading) return@Observer
 
-                if(pointsData.isEmpty()){
+                if( !pointsData.isEmpty()){
                     contentState = Content
                 }else{
                     contentState = Empty
@@ -128,7 +123,7 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
     }
 
     fun openCreatePointDialog(){
-        val dialog = CreatePointDialog(this, this)
+        val dialog = PointDialog(this, this, PointDialog.Type.Create)
         dialog.show()
     }
 
@@ -141,30 +136,31 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
 
     @Synchronized fun updateContentState( contentState : ContentState){
 
+        async(UI) {
+            content.visibility = View.GONE
+            empty.visibility = View.GONE
+            loading.visibility = View.GONE
 
-        content.visibility = View.GONE
-        empty.visibility = View.GONE
-        loading.visibility = View.GONE
+            when(contentState){
 
-        when(contentState){
-
-            Loading ->  {
-                loading.visibility = View.VISIBLE
-            }
-            Content ->   {
-                content.visibility = View.VISIBLE
-            }
-            Empty   ->   {
-                empty.visibility = View.VISIBLE
-            }
-            NoLoading -> {
-                if(pointsData.isNotEmpty())
+                Loading ->  {
+                    loading.visibility = View.VISIBLE
+                }
+                Content ->   {
                     content.visibility = View.VISIBLE
-                else
+                }
+                Empty   ->   {
                     empty.visibility = View.VISIBLE
+                }
+                NoLoading -> {
+                    if(pointsData.isNotEmpty())
+                        content.visibility = View.VISIBLE
+                    else
+                        empty.visibility = View.VISIBLE
+                }
             }
+            d("")
         }
-        d("")
     }
 
 
@@ -200,20 +196,29 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
 
 
     /**
-     *  CreatePointDialog callbacks
+     *  PointDialog callbacks
      */
 
 
 
     override fun onPointDialogFind(address : String) {
         presenter.createPointByAddress(address)
+        pointsLD.update()
     }
 
     override fun onPointDialogCreate(address : String, lat: Double, lng :Double) {
         presenter.savePoint(address, lat, lng)
+        pointsLD.update()
     }
 
-    override fun onPointDialogCancel() {}
+    override fun onPointDialogCancel() {
+
+    }
+
+    override fun onPointDialogUpdate(point: RPoint, address: String, lat: Double, lng: Double) {
+        presenter.updatePoint(point, address, lat, lng)
+        pointsLD.update()
+    }
 
 
 
@@ -227,9 +232,14 @@ class DetailActivity : BaseActivity(), RPointsAdapter.RPointDelegate, CreatePoin
     }
 
     override fun onEditPoint(point: RPoint) {
+        PointDialog(this, this ,  PointDialog.Type.Modify, point).show()
+
     }
 
+
     override fun onRemovePoint(point: RPoint) {
+        presenter.removePoint(point)
+        pointsLD.update()
     }
 
 

@@ -36,7 +36,10 @@ open class PointsLD  @Inject constructor(var  dataRepo : IDataRepo)  :  LiveData
         super.onInactive()
     }
 
-
+    fun update() {
+        val data = dataRepo.getAllPoints()
+        value =  data
+    }
 
 
 }

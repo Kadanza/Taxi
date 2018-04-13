@@ -23,5 +23,7 @@
     <string name="connection_timeout">Connection is timeout</string>
     <string name="no_res_for_point_location">No result for point location</string>
     <string name="point_created">Point created</string>
+    <string name="update">update</string>
+    <string name="update_point">Update Point</string>
 
 </resources>

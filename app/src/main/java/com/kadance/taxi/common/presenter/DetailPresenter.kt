@@ -9,6 +9,7 @@ import com.kadance.taxi.common.live.PointsLD
 import com.kadance.taxi.common.repo.NetRepo
 import com.kadance.taxi.common.repo.RealmRepo
 import com.kadance.taxi.common.view.DetailActivity
+import com.kadance.taxi.data.RPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeoutException
@@ -34,9 +35,7 @@ open  class DetailPresenter @Inject constructor(
 
     @SuppressLint("CheckResult")
     open fun createPointByAddress(address : String){
-
         isLoadingLD.setLoading(true)
-
         netRepo.requestLocationByAddress(address)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io()).subscribe({
@@ -66,14 +65,18 @@ open  class DetailPresenter @Inject constructor(
 
     fun savePoint(name: String, lat: Double, lng: Double) {
         dataRepo.createPoint(name, lat,lng)
-
         EventBus.getDefault().post(DetailActivity.PointLoadingEvent.Create)
     }
 
 
+    fun updatePoint(point : RPoint, name: String, lat: Double, lng: Double) {
+        dataRepo.editPoint(point, name, lat,lng)
+    }
 
-    open fun createPointByLatLng(){
-//        pointsLD()
+
+    fun removePoint(point: RPoint) {
+        dataRepo.removePoint(point)
+
     }
 
 }

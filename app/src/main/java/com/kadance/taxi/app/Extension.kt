@@ -36,6 +36,14 @@ fun Context.showToast( msg : String) {
     Toast.makeText(this ,msg,Toast.LENGTH_SHORT).show()
 }
 
+fun String.parseToDouble(): Double {
+    var d = 0.0
+
+    try {  d = toString().toDouble()  }catch (e : Exception){ }
+
+    return d
+}
+
 
 
 
